@@ -1,0 +1,50 @@
+!! Colorscheme
+
+! Special
+*.foreground: #ffffff
+!*.background: #0f224f
+*.background: #031336
+*.cursorColor: #afbfbf
+
+! colors
+! black
+*.color0: #000000
+*.color8: #263640
+! red
+*.color1: #ff0000
+*.color9: #d12f2c
+! green
+*.color2: #00ff00
+*.color10: #58d433
+! yellow
+*.color3: #ffff00
+*.color11: #f1e12c
+! blue
+*.color4: #2587cc
+*.color12: #2ca2f5
+! magenta
+*.color5: #696ebf
+*.color13: #8086e8
+! cream
+*.color6: #fff9e2
+*.color14: #ffe5a2
+! white
+*.color7: #bfbaac
+*.color15: #fdf6e3
+
+! Fonts
+*.faceName: DejaVu Sans Mono 
+*.faceSize: 9
+ 
+
+! Locale
+*.vt100.locale: false
+*.vt100.utf8: true
+
+! Urxvt stuff
+URxvt.font: xft:DejaVu Sans Mono:size=9
+URxvt.cursorBlink: true
+URxvt.scrollBar: false
+URxvt.letterSpace: -1
+URxvt.geometry: 125x40
+!URxvt.geometry: 92x24

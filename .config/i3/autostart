@@ -1,0 +1,36 @@
+#!/bin/bash
+
+##########################
+# Apps to run on startup #
+##########################
+
+# set a wallpaper
+feh --bg-fill ~/Pictures/mountain.jpg
+
+# load Xresources
+xrdb ~/.Xresources 
+
+# start picom
+picom& 
+
+# start dunst
+dunst& 
+
+# start flameshot
+flameshot& 
+
+# start ibus daemon
+ibus-daemon -drxR 
+
+# start polybar
+sh ~/.config/polybar/launch.sh& 
+
+#start tint2
+sh ~/.config/tint2/launch.sh& 
+
+###################
+# Change keybinds #
+###################
+
+# Caps lock to esc
+setxkbmap -option caps:escape

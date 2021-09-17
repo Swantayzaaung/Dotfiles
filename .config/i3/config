@@ -12,6 +12,7 @@
 
 set $mod Mod4
 font pango:Noto Sans 10
+#font pango:DejaVu Sans Mono 0
 default_orientation horizontal
 workspace_layout tabbed
 
@@ -93,6 +94,8 @@ bindsym XF86Explorer exec --no-startup-id thunar
 # Open favorites
 bindsym XF86Favorites exec --no-startup-id thunar ~/Favorites
 
+# Change brightness
+#
 ############################
 # Window manager shortcuts #
 ############################
@@ -220,25 +223,38 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-############################
-#          Windows         #
-############################
+######################
+#  Window  Settings  #
+######################
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #7392c1 #314b84 #ffffff #2e9ef4   #7392c1
-client.focused_inactive #7392c1 #273b68 #ffffff #484e50   #7392c1
-client.unfocused        #7392c1 #273b68 #888888 #292d2e   #7392c1
-#client.urgent           #cf1f09 #dc431d #ffffff #900000   #cf1f09
-#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.focused          #7ebcc2 #014864 #ffffff #2e9ef4   #7ebcc2
+client.focused_inactive #7392c1 #042a3d #ffffff #484e50   #7392c1
+client.unfocused        #7ebcc2 #042a3d #888888 #292d2e   #7ebcc2
+client.urgent           #7ebcc2 #5f2d48 #ffffff #292d2e   #7ebcc2
 
 #client.background       #ffffff
+
+# set window state
+for_window [class="Pavucontrol"] floating enable border pixel 2, move absolute  position 920 px 35 px
+for_window [class="zoom"] floating enable 
+
+# send windows to workspaces
+assign [class="URxvt"] 1
+assign [class="firefox"] 2
+assign [class="zoom"] 2
+assign [class="thunar"] 3
+assign [class="kolourpaint"] 3
+assign [class="pinta"] 3
+assign [class="Discord"] 4
+
 
 ############################
 #          i3-gaps         #
 ############################
 
 # Disable titlebars
-#for_window [class="^.*"] border pixel 2 
+for_window [class="^.*"] border pixel 2 
 
 # Set gaps
 gaps inner 5

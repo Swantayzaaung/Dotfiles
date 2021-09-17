@@ -1,19 +1,11 @@
 #!/bin/bash
 
-##########################
-# Kill certain processes #
-##########################
-
-# kill xfce panel
-pkill xfce4-panel
-
-
-##########################
-# Apps to run on startup #
-##########################
+#######################################
+# Apps and commands to run on startup #
+#######################################
 
 # set a wallpaper
-feh --bg-fill ~/Pictures/mountain.jpg
+feh --bg-fill ~/Pictures/Cave2.png
 
 # load Xresources
 xrdb ~/.Xresources 
@@ -34,7 +26,7 @@ ibus-daemon -drxR
 sh ~/.config/polybar/launch.sh& 
 
 #start tint2
-sh ~/.config/tint2/launch.sh& 
+#sh ~/.config/tint2/launch.sh& 
 
 ###################
 # Change keybinds #

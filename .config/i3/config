@@ -15,6 +15,9 @@ font pango:Noto Sans 10
 #font pango:DejaVu Sans Mono 0
 default_orientation horizontal
 workspace_layout tabbed
+title_align center
+hide_edge_borders none
+focus_follows_mouse no
 
 # Define names for default workspaces
 set $ws1 "1"
@@ -49,26 +52,31 @@ bindsym $mod+shift+d exec --no-startup-id rofi -show run
 
 # Flameshot shortcuts
 bindsym $mod+shift+s exec --no-startup-id flameshot gui
-bindsym $mod+Print exec --no-startup-id flameshot full -p ~/Pictures/Screenshots
+bindsym $mod+Print exec --no-startup-id flameshot full -p ~/Pictures/Screenshots 
 bindsym Print exec --no-startup-id flameshot full -c
 
 # start a file manager
-bindsym Mod4+e exec --no-startup-id thunar
+bindsym Mod4+e exec --no-startup-id thunar; workspace number 3
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id urxvt
+bindsym $mod+Return exec --no-startup-id urxvt; workspace number 1
 
 # start discord
-bindsym $mod+ctrl+d exec --no-startup-id discord
+bindsym $mod+ctrl+d exec --no-startup-id discord; workspace number 4
 
 # start firefox
-bindsym $mod+shift+f exec --no-startup-id firefox
+bindsym $mod+shift+f exec --no-startup-id firefox; workspace number 2
+bindsym $mod+shift+p exec --no-startup-id firefox --private-window; workspace number 2
 
 # start zoom
-bindsym $mod+z exec --no-startup-id zoom
+bindsym $mod+z exec --no-startup-id zoom; workspace number 2
 
 # view school schedules
 bindsym $mod+i exec --no-startup-id feh ~/Pictures/iip-new-schedule.png
+
+# turn off display
+bindsym $mod+ctrl+shift+b exec --no-startup-id xset dpms force off
+
 # Shutdown
 bindsym Mod4+Mod1+F4 exec shutdown now
 bindsym ctrl+Mod1+r exec reboot
@@ -95,13 +103,15 @@ bindsym XF86Explorer exec --no-startup-id thunar
 bindsym XF86Favorites exec --no-startup-id thunar ~/Favorites
 
 # Change brightness
-#
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+
 ############################
 # Window manager shortcuts #
 ############################
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 bindsym Mod4+F4 kill
 bindsym Mod1+F4 kill
 
@@ -138,7 +148,7 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym F11 fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -237,24 +247,26 @@ client.urgent           #7ebcc2 #5f2d48 #ffffff #292d2e   #7ebcc2
 
 # set window state
 for_window [class="Pavucontrol"] floating enable border pixel 2, move absolute  position 920 px 35 px
-for_window [class="zoom"] floating enable 
+for_window [window_role="pop-up"] floating enable 
 
 # send windows to workspaces
 assign [class="URxvt"] 1
 assign [class="firefox"] 2
 assign [class="zoom"] 2
-assign [class="thunar"] 3
+assign [class="Thunar"] 3
 assign [class="kolourpaint"] 3
 assign [class="pinta"] 3
-assign [class="Discord"] 4
-
+assign [class="okular"] 3
+assign [class="discord"] 4
+assign [class="org-tlauncher-tlauncher-rmo-TLauncher"] 5
+assign [class="Minecraft* 1.17.1"] 5
 
 ############################
 #          i3-gaps         #
 ############################
 
 # Disable titlebars
-for_window [class="^.*"] border pixel 2 
+#for_window [class="^.*"] border pixel 1
 
 # Set gaps
 gaps inner 5

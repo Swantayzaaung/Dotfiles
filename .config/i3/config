@@ -10,14 +10,18 @@
 ##                                                               ##
 ###################################################################
 
+# set some wm settings
 set $mod Mod4
-font pango:Noto Sans 10
+font pango:Roboto 11
 #font pango:DejaVu Sans Mono 0
 default_orientation horizontal
 workspace_layout tabbed
 title_align center
 hide_edge_borders none
-focus_follows_mouse no
+
+#############
+# Variables #
+#############
 
 # Define names for default workspaces
 set $ws1 "1"
@@ -31,11 +35,16 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# My variables
+set $terminal urxvt
+set $browser firefox
+set $filemanager thunar
+
 ############################
 #      Run on startup      #
 ############################
 
-exec_always --no-startup-id ~/.config/i3/autostart
+exec_always --no-startup-id ~/.scripts/autostart
 
 ############################
 #    Keyboard shortcuts    #
@@ -46,36 +55,37 @@ exec_always --no-startup-id ~/.config/i3/autostart
 #########################
 
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show drun 
+bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show window 
-bindsym $mod+shift+d exec --no-startup-id rofi -show run
 
 # Flameshot shortcuts
 bindsym $mod+shift+s exec --no-startup-id flameshot gui
-bindsym $mod+Print exec --no-startup-id flameshot full -p ~/Pictures/Screenshots 
+bindsym $mod+Print exec --no-startup-id flameshot full -p ~/pics/screenshots
 bindsym Print exec --no-startup-id flameshot full -c
 
 # start a file manager
-bindsym Mod4+e exec --no-startup-id thunar; workspace number 3
+bindsym Mod4+e exec --no-startup-id $filemanager; workspace number 3
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id urxvt; workspace number 1
+bindsym $mod+Return exec --no-startup-id $terminal; workspace number 1
 
 # start discord
+bindsym $mod+shift+d exec --no-startup-id firefox https://discord.com/app; workspace number 2
 bindsym $mod+ctrl+d exec --no-startup-id discord; workspace number 4
 
 # start firefox
-bindsym $mod+shift+f exec --no-startup-id firefox; workspace number 2
-bindsym $mod+shift+p exec --no-startup-id firefox --private-window; workspace number 2
+bindsym $mod+f exec --no-startup-id $browser; workspace number 2
+bindsym $mod+shift+f exec --no-startup-id $browser; workspace number 2
+bindsym $mod+shift+p exec --no-startup-id $browser --private-window; workspace number 2
 
 # start zoom
 bindsym $mod+z exec --no-startup-id zoom; workspace number 2
 
 # view school schedules
-bindsym $mod+i exec --no-startup-id feh ~/Pictures/iip-new-schedule.png
+bindsym $mod+i exec --no-startup-id feh ~/pics/iip-new-schedule.png
 
 # turn off display
-bindsym $mod+ctrl+shift+b exec --no-startup-id xset dpms force off
+bindsym $mod+ctrl+shift+b exec --no-startup-id ~/.scripts/backlight.sh 
 
 # Shutdown
 bindsym Mod4+Mod1+F4 exec shutdown now
@@ -86,9 +96,10 @@ bindsym ctrl+Mod1+r exec reboot
 #################
 
 # Change Volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% 
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% 
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% 
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% 
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle 
+#bindsym F9 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Open homepage
 bindsym XF86HomePage exec --no-startup-id firefox
@@ -97,10 +108,10 @@ bindsym XF86HomePage exec --no-startup-id firefox
 bindsym XF86Mail exec --no-startup-id firefox mail.google.com
 
 # Open expolorer
-bindsym XF86Explorer exec --no-startup-id thunar
+bindsym XF86Explorer exec --no-startup-id $filemanager 
 
 # Open favorites
-bindsym XF86Favorites exec --no-startup-id thunar ~/Favorites
+bindsym XF86Favorites exec --no-startup-id $filemanager ~/Favorites
 
 # Change brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
@@ -112,8 +123,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
 # kill focused window
 bindsym $mod+q kill
-bindsym Mod4+F4 kill
 bindsym Mod1+F4 kill
+bindsym Mod1+q kill
 
 # change focus
 bindsym $mod+j focus left
@@ -163,6 +174,7 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+bindsym XF86Launch3 focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -205,6 +217,7 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym Mod1+ctrl+d move container to workspace number $ws6
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -238,19 +251,22 @@ bindsym $mod+r mode "resize"
 ######################
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #7ebcc2 #014864 #ffffff #2e9ef4   #7ebcc2
-client.focused_inactive #7392c1 #042a3d #ffffff #484e50   #7392c1
-client.unfocused        #7ebcc2 #042a3d #888888 #292d2e   #7ebcc2
-client.urgent           #7ebcc2 #5f2d48 #ffffff #292d2e   #7ebcc2
+client.focused          #a2a2a2 #3e463f #d3d3d3 #2e9ef4   #a2a2a2
+client.focused_inactive #a2a2a2 #1e261f #d3d3d3 #484e50   #a2a2a2
+client.unfocused        #a2a2a2 #1e261f #d3d3d3 #292d2e   #a2a2a2
+client.urgent           #a2a2a2 #aa4450 #d3d3d3 #292d2e   #a2a2a2
 
 #client.background       #ffffff
 
 # set window state
-for_window [class="Pavucontrol"] floating enable border pixel 2, move absolute  position 920 px 35 px
+for_window [class="Pavucontrol"] floating enable border pixel 1, move absolute position 950 px 36 px
+for_window [class="Xfce4-power-manager-settings"] floating enable border pixel 1, move absolute position 950px 36px
+for_window [class="Connman-gtk"] floating enable border pixel 1, move absolute position 950 px 36 px
 for_window [window_role="pop-up"] floating enable 
 
 # send windows to workspaces
 assign [class="URxvt"] 1
+assign [class="code-oss"] 1
 assign [class="firefox"] 2
 assign [class="zoom"] 2
 assign [class="Thunar"] 3
@@ -258,6 +274,7 @@ assign [class="kolourpaint"] 3
 assign [class="pinta"] 3
 assign [class="okular"] 3
 assign [class="discord"] 4
+assign [class="ViberPC"] 4
 assign [class="org-tlauncher-tlauncher-rmo-TLauncher"] 5
 assign [class="Minecraft* 1.17.1"] 5
 
@@ -269,5 +286,8 @@ assign [class="Minecraft* 1.17.1"] 5
 #for_window [class="^.*"] border pixel 1
 
 # Set gaps
+gaps top 36
+gaps left 5
+gaps right 5
+gaps bottom 5
 gaps inner 5
-gaps outer 5 

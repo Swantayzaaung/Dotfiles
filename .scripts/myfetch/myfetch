@@ -1,0 +1,58 @@
+#!/usr/bin/bash
+
+# Default ASCII path
+defaultpath=~/.scripts/myfetch
+# Store system specs in a variable
+title="$USER@$HOSTNAME: "
+distro="$(grep -m 1 NAME /etc/os-release | cut -d'"' -f2)"
+cpu="$(grep -m 1 name /proc/cpuinfo | cut -d':' -f2 | awk '{print $1,$2,$3}')"
+memfreemb=$(echo "$(($(grep MemFree /proc/meminfo | awk '{print $2}') / 1000 ))MB")
+memtotalmb=$(echo "$(($(grep MemTotal /proc/meminfo | awk '{print $2}') / 1000 ))MB")
+mem="$memfreemb/$memtotalmb"
+shell="$SHELL"
+packages="$(pacman -Q | wc -l)"
+
+# Add them to an array
+specs=("$title" 
+		"distro:    $distro" 
+		"cpu:       $cpu" 
+		"memory:    $mem" 
+		"shell:     $shell" 
+		"pkgs:      $packages")
+
+# Print the ASCII and the specs
+printinfo() {
+	i=0
+	# Find the maximum length of the ASCII
+	maxlen=1
+	while IFS= read -r line; do
+		len=${#line}
+		if [ $len -gt $maxlen ]; then
+			maxlen=$len
+		fi
+	done < $1
+
+	# Print out the ASCII
+	while IFS= read -r line; do
+		len=${#line}
+		diff=$(($maxlen - $len))
+		printf "%s" "$line"
+		for j in $(seq 1 $diff); do
+			printf " "
+		done
+		printf "  %s" "${specs[i]}"
+		printf "\n"
+		i=$(($i+1))
+	done < $1
+}
+
+if [ "$1" ]; then
+	height=$(cat $1 | wc -l)
+	if [ $height -gt 4 ]; then
+		printinfo $1
+	else
+		echo "Your ASCII file is too small"
+	fi
+else
+	printinfo $defaultpath/default.txt
+fi
